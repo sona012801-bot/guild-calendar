@@ -48,3 +48,511 @@
     height:100%;
     max-height:900px;
     background:var(--paper);
+    border-radius:18px;
+    box-shadow:0 30px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.04);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    position:relative;
+  }
+
+  /* ---------- Title bar ---------- */
+  .titlebar{
+    background:linear-gradient(180deg, var(--ink-2), var(--ink) 90%);
+    color:#fff;
+    padding:16px 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-shrink:0;
+    border-bottom:3px solid var(--gold-trim);
+  }
+  .title-wrap{ display:flex; flex-direction:column; gap:3px; }
+  .titlebar h1{
+    font-family:'Jua', sans-serif;
+    font-size:24px;
+    letter-spacing:1px;
+    margin:0;
+  }
+  .titlebar h1 .accent{
+    color:#ffd88a;
+    text-shadow:0 0 14px rgba(255,216,138,0.55);
+  }
+  .guild-tag{
+    font-size:10px;
+    letter-spacing:3px;
+    color:#9aa0d4;
+    font-weight:700;
+  }
+  .titlebar .sub{
+    font-size:12px;
+    opacity:0.65;
+    font-weight:500;
+  }
+
+  /* ---------- Scroll area (horizontal only) ---------- */
+  .scroll-area{
+    flex:1;
+    overflow-x:auto;
+    overflow-y:auto;
+    position:relative;
+  }
+  .scroll-area::-webkit-scrollbar{ height:12px; width:12px; }
+  .scroll-area::-webkit-scrollbar-track{ background:var(--paper-line); }
+  .scroll-area::-webkit-scrollbar-thumb{ background:var(--gold-trim); border-radius:8px; }
+
+  .grid-inner{
+    width:max-content;
+    min-width:100%;
+  }
+
+  /* ---------- Day header ---------- */
+  .header-row{
+    display:flex;
+    position:sticky;
+    top:0;
+    z-index:5;
+  }
+  .corner{
+    position:sticky;
+    left:0;
+    z-index:7;
+    width:var(--label-width);
+    flex-shrink:0;
+    background:var(--ink-2);
+    border-right:2px solid var(--gold-trim);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .day-header{
+    display:grid;
+    background:var(--ink-2);
+  }
+  .day-cell{
+    width:var(--col-width);
+    padding:10px 4px 12px;
+    text-align:center;
+    color:#cfd3ee;
+    border-right:1px solid rgba(255,255,255,0.08);
+  }
+  .day-cell .dow{
+    font-family:'Jua', sans-serif;
+    font-size:14px;
+    display:block;
+  }
+  .day-cell .date{
+    font-size:12px;
+    opacity:0.7;
+    display:block;
+    margin-top:2px;
+  }
+  .day-cell.today{
+    background:linear-gradient(180deg, #4a4f86, #3a3f70);
+  }
+  .day-cell.today .dow, .day-cell.today .date{
+    color:#ffd88a;
+    opacity:1;
+    font-weight:700;
+  }
+  .day-cell.weekend .dow{ color:#f3a58f; }
+
+  /* ---------- Category rows ---------- */
+  .rows{
+    position:relative;
+  }
+  .cat-block{
+    display:flex;
+  }
+  .cat-label{
+    position:sticky;
+    left:0;
+    z-index:4;
+    width:var(--label-width);
+    flex-shrink:0;
+    background:var(--ink-2);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-family:'Jua', sans-serif;
+    font-size:13px;
+    line-height:1.35;
+    padding:6px 8px;
+    border-right:2px solid var(--gold-trim);
+    border-bottom:2px solid var(--paper-line-strong);
+  }
+  .cat-rows{
+    display:flex;
+    flex-direction:column;
+    flex:1;
+  }
+  .row{
+    display:grid;
+    height:var(--row-h);
+    border-bottom:1px solid var(--paper-line);
+  }
+  .row:last-child{ border-bottom:2px solid var(--paper-line-strong); }
+  .cell{
+    border-right:1px solid var(--paper-line);
+    width:var(--col-width);
+  }
+  .cell.weekend{ background:rgba(226,88,60,0.04); }
+  .row-empty-note{
+    grid-column:1 / -1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#c2b892;
+    font-size:12px;
+    pointer-events:none;
+  }
+
+  .bar{
+    grid-row:1;
+    align-self:center;
+    margin:0 4px;
+    height:40px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0 14px;
+    color:#fff;
+    font-family:'Jua', sans-serif;
+    font-size:14px;
+    letter-spacing:0.2px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    box-shadow:0 3px 0 rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.25);
+    position:relative;
+  }
+  .bar::after{
+    content:"";
+    position:absolute;
+    right:8px;
+    top:50%;
+    transform:translateY(-50%);
+    width:0; height:0;
+    border-top:5px solid transparent;
+    border-bottom:5px solid transparent;
+    border-left:7px solid rgba(255,255,255,0.55);
+  }
+
+  /* today marker thread */
+  .today-thread{
+    position:absolute;
+    top:0;
+    bottom:0;
+    width:0;
+    border-left:2px dashed rgba(35,39,70,0.55);
+    z-index:3;
+    pointer-events:none;
+  }
+  .today-flag{
+    position:absolute;
+    top:-1px;
+    transform:translateX(-50%);
+    background:#ffd88a;
+    color:#2a2140;
+    font-family:'Jua', sans-serif;
+    font-size:11px;
+    padding:2px 8px;
+    border-radius:0 0 8px 8px;
+    z-index:6;
+    box-shadow:0 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .empty-note{
+    padding:40px;
+    text-align:center;
+    color:#8a8360;
+    font-size:13px;
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="board">
+    <div class="titlebar">
+      <div class="title-wrap">
+        <h1>탕탕특공대 <span class="accent">빠따길드</span></h1>
+        <div class="guild-tag">GUILD EVENT CALENDAR</div>
+      </div>
+      <div class="sub" id="rangeLabel"></div>
+    </div>
+    <div class="scroll-area">
+      <div class="grid-inner">
+        <div class="header-row">
+          <div class="corner"></div>
+          <div class="day-header" id="dayHeader"></div>
+        </div>
+        <div class="rows" id="rows"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   여기서부터 데이터만 바꾸면 다른 게임/일정에도 재사용 가능합니다.
+   color 값: coral, amber, moss, sky, iris, rose 중 선택
+   start / end 는 'YYYY-MM-DD' 형식 (end 포함)
+   category 값은 아래 CATEGORIES의 key 중 하나를 사용합니다.
+========================================================= */
+
+// 캘린더에 항상 이 순서/개수(10줄)로 표시됩니다. 데이터가 없어도 빈 줄로 남습니다.
+const CATEGORIES = [
+  { key:'regular',      label:'정규 이벤트' },
+  { key:'moon-mine',    label:'달 광산 원정' },
+  { key:'expedition',   label:'길드 탐험' },
+  { key:'online',       label:'온라인 도전' },
+  { key:'escape',       label:'탈출 작전' },
+  { key:'territory',    label:'영역 행동' },
+  { key:'new-revamp',   label:'신규 및 개편' },
+  { key:'jewel-carnival', label:'보석카니발' },
+  { key:'exchange',     label:'통합교환' },
+  { key:'guild-shop',   label:'길드상점' },
+];
+
+const EVENTS = [
+  // ---- 1) 정규 이벤트 (달력 이미지 기준) ----
+  { name:'학교 회전 대작전 이벤트',        start:'2026-07-01', end:'2026-07-06', color:'moss',  category:'regular' },
+  { name:'행복 목장 이벤트',              start:'2026-07-07', end:'2026-07-12', color:'iris',  category:'regular' },
+  { name:'미식의 여신 이벤트',            start:'2026-07-13', end:'2026-07-18', color:'sky',   category:'regular' },
+  { name:'항해 격자 상점 이벤트',          start:'2026-07-19', end:'2026-07-24', color:'amber', category:'regular' },
+  { name:'컬러펜 마법의 집 이벤트',        start:'2026-07-25', end:'2026-07-30', color:'coral', category:'regular' },
+
+  // ---- 2) 달 광산 원정 : 86214 Agents-of-Chaos·RzR / 길드 전투 1라운드 (매주 반복) ----
+  // 1주차
+  { name:'원정 준비 (수 13:00~목)',       start:'2026-07-01', end:'2026-07-02', color:'coral', category:'moon-mine' },
+  { name:'전투 1라운드',                 start:'2026-07-03', end:'2026-07-03', color:'moss',  category:'moon-mine' },
+  { name:'전투 2라운드',                 start:'2026-07-04', end:'2026-07-04', color:'sky',   category:'moon-mine' },
+  { name:'전투 3라운드',                 start:'2026-07-05', end:'2026-07-05', color:'rose',  category:'moon-mine' },
+  // 2주차
+  { name:'원정 준비 (수 13:00~목)',       start:'2026-07-08', end:'2026-07-09', color:'coral', category:'moon-mine' },
+  { name:'전투 1라운드',                 start:'2026-07-10', end:'2026-07-10', color:'moss',  category:'moon-mine' },
+  { name:'전투 2라운드',                 start:'2026-07-11', end:'2026-07-11', color:'sky',   category:'moon-mine' },
+  { name:'전투 3라운드',                 start:'2026-07-12', end:'2026-07-12', color:'rose',  category:'moon-mine' },
+  // 3주차
+  { name:'원정 준비 (수 13:00~목)',       start:'2026-07-15', end:'2026-07-16', color:'coral', category:'moon-mine' },
+  { name:'전투 1라운드',                 start:'2026-07-17', end:'2026-07-17', color:'moss',  category:'moon-mine' },
+  { name:'전투 2라운드',                 start:'2026-07-18', end:'2026-07-18', color:'sky',   category:'moon-mine' },
+  { name:'전투 3라운드',                 start:'2026-07-19', end:'2026-07-19', color:'rose',  category:'moon-mine' },
+  // 4주차
+  { name:'원정 준비 (수 13:00~목)',       start:'2026-07-22', end:'2026-07-23', color:'coral', category:'moon-mine' },
+  { name:'전투 1라운드',                 start:'2026-07-24', end:'2026-07-24', color:'moss',  category:'moon-mine' },
+  { name:'전투 2라운드',                 start:'2026-07-25', end:'2026-07-25', color:'sky',   category:'moon-mine' },
+  { name:'전투 3라운드',                 start:'2026-07-26', end:'2026-07-26', color:'rose',  category:'moon-mine' },
+  // 5주차
+  { name:'원정 준비 (수 13:00~목)',       start:'2026-07-29', end:'2026-07-30', color:'coral', category:'moon-mine' },
+  { name:'전투 1라운드',                 start:'2026-07-31', end:'2026-07-31', color:'moss',  category:'moon-mine' },
+  { name:'전투 2라운드',                 start:'2026-08-01', end:'2026-08-01', color:'sky',   category:'moon-mine' },
+  { name:'전투 3라운드',                 start:'2026-08-02', end:'2026-08-02', color:'rose',  category:'moon-mine' },
+
+  // ---- 3) 길드 탐험 : 매주 목요일 시작 ~ 수요일 마감 ----
+  { name:'길드 탐험',   start:'2026-07-16', end:'2026-07-22', color:'iris', category:'expedition' },
+  { name:'길드 탐험',   start:'2026-07-23', end:'2026-07-29', color:'iris', category:'expedition' },
+  { name:'길드 탐험',   start:'2026-07-30', end:'2026-08-05', color:'iris', category:'expedition' },
+  { name:'길드 탐험',   start:'2026-08-06', end:'2026-08-12', color:'iris', category:'expedition' },
+  { name:'길드 탐험',   start:'2026-08-13', end:'2026-08-19', color:'iris', category:'expedition' },
+
+  // ---- 4) 온라인 도전 : 매주 월요일 시작 ~ 일요일 마감 ----
+  { name:'온라인 도전', start:'2026-07-20', end:'2026-07-26', color:'sky', category:'online' },
+  { name:'온라인 도전', start:'2026-07-27', end:'2026-08-02', color:'sky', category:'online' },
+  { name:'온라인 도전', start:'2026-08-03', end:'2026-08-09', color:'sky', category:'online' },
+  { name:'온라인 도전', start:'2026-08-10', end:'2026-08-16', color:'sky', category:'online' },
+
+  // ---- 5) 탈출 작전 : 7/17 시작, 8/7까지 진행 → 8/8 교환 → 8/9부터 재시작 ----
+  { name:'탈출 작전',  start:'2026-07-17', end:'2026-08-07', color:'moss',  category:'escape' },
+  { name:'교환',       start:'2026-08-08', end:'2026-08-08', color:'amber', category:'escape' },
+  { name:'탈출 작전',  start:'2026-08-09', end:'2026-08-12', color:'moss',  category:'escape' },
+
+  // ---- 6) 영역 행동 : 진행중, 7/21 14:46 기준 8일9시간 후 종료(7/29) ----
+  { name:'영역 행동 (진행중)', start:'2026-07-20', end:'2026-07-29', color:'rose', category:'territory' },
+
+  // ---- 8) 보석카니발 ----
+  { name:'보석 카니발',                 start:'2026-07-13', end:'2026-07-24', color:'rose',  category:'jewel-carnival', icon:'💎' },
+
+  // ---- 9) 통합교환 : 진행중, 7/21 14:46 기준 23일9시간 후 갱신(8/13) ----
+  { name:'통합교환 (진행중)', start:'2026-07-20', end:'2026-08-13', color:'amber', category:'exchange' },
+
+  // ---- 10) 길드상점 : 진행중, 7/21 14:46 기준 14일9시간 후 갱신(8/4) ----
+  { name:'길드상점 (진행중)', start:'2026-07-20', end:'2026-08-04', color:'coral', category:'guild-shop' },
+
+  // ---- 7) 신규 및 개편 ----
+  { name:'길드 탐색 기능 개편',            start:'2026-07-03', end:'2026-07-03', color:'sky',   category:'new-revamp' },
+  { name:'신규 듀얼 부품 과부하 오픈 (1)',  start:'2026-07-08', end:'2026-07-08', color:'amber', category:'new-revamp' },
+  { name:'SS 외계 신편 - 벨트',           start:'2026-07-19', end:'2026-07-19', color:'iris',  category:'new-revamp' },
+  { name:'신규 듀얼 부품 과부하 오픈 (2)',  start:'2026-07-23', end:'2026-07-23', color:'amber', category:'new-revamp' },
+];
+
+/* 실제 오늘 날짜로 마커를 표시하고 싶지 않다면 아래 줄을 원하는 날짜로 고정하세요. */
+const TODAY = new Date(); TODAY.setHours(0,0,0,0);
+// const TODAY = new Date('2026-02-19');
+
+/* ========================================================= */
+
+const DOW = ['월','화','수','목','금','토','일'];
+
+function parseDate(s){
+  const [y,m,d] = s.split('-').map(Number);
+  return new Date(y, m-1, d);
+}
+function dayDiff(a,b){
+  return Math.round((b - a) / 86400000);
+}
+function fmt(d){
+  return `${d.getMonth()+1}/${d.getDate()}`;
+}
+function jsDowIndex(d){
+  // JS: 0=Sun..6=Sat -> convert to 월=0..일=6
+  return (d.getDay() + 6) % 7;
+}
+
+if(EVENTS.length === 0){
+  document.getElementById('rows').innerHTML = '<div class="empty-note">등록된 이벤트가 없습니다.</div>';
+} else {
+  const starts = EVENTS.map(e => parseDate(e.start));
+  const ends   = EVENTS.map(e => parseDate(e.end));
+  const minDate = new Date(Math.min(...starts));
+  const maxDate = new Date(Math.max(...ends));
+  const days = dayDiff(minDate, maxDate) + 1;
+
+  document.getElementById('rangeLabel').textContent = `${fmt(minDate)} - ${fmt(maxDate)}`;
+
+  const headerEl = document.getElementById('dayHeader');
+  const rowsEl = document.getElementById('rows');
+
+  headerEl.style.gridTemplateColumns = `repeat(${days}, var(--col-width))`;
+
+  let todayIndex = -1;
+
+  for(let i=0;i<days;i++){
+    const d = new Date(minDate);
+    d.setDate(d.getDate()+i);
+    const dow = jsDowIndex(d);
+    const isWeekend = dow === 5 || dow === 6;
+    const isToday = dayDiff(d, TODAY) === 0;
+    if(isToday) todayIndex = i;
+
+    const cell = document.createElement('div');
+    cell.className = 'day-cell' + (isWeekend ? ' weekend' : '') + (isToday ? ' today' : '');
+    cell.innerHTML = `<span class="dow">${DOW[dow]}</span><span class="date">${fmt(d)}</span>`;
+    headerEl.appendChild(cell);
+  }
+
+  // 같은 카테고리 안에서 날짜가 겹치는 이벤트가 있으면 서브라인으로 나눠 배치합니다.
+  function assignLanes(events){
+    const sorted = events
+      .map((ev, originalIndex) => ({ ev, originalIndex, s: parseDate(ev.start), e: parseDate(ev.end) }))
+      .sort((a,b) => a.s - b.s || a.e - b.e || a.originalIndex - b.originalIndex);
+
+    const lanes = []; // [{ lastEnd: Date, items: [] }]
+    sorted.forEach(item => {
+      let lane = lanes.find(l => l.lastEnd < item.s);
+      if(!lane){
+        lane = { lastEnd: item.e, items: [] };
+        lanes.push(lane);
+      }
+      lane.lastEnd = item.e;
+      lane.items.push(item.ev);
+    });
+    return lanes.map(l => l.items);
+  }
+
+  function buildDayCellsRow(){
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.style.gridTemplateColumns = `repeat(${days}, var(--col-width))`;
+    for(let i=0;i<days;i++){
+      const d = new Date(minDate);
+      d.setDate(d.getDate()+i);
+      const dow = jsDowIndex(d);
+      const isWeekend = dow === 5 || dow === 6;
+      const cell = document.createElement('div');
+      cell.className = 'cell' + (isWeekend ? ' weekend' : '');
+      row.appendChild(cell);
+    }
+    return row;
+  }
+
+  CATEGORIES.forEach(cat => {
+    const catEvents = EVENTS.filter(ev => ev.category === cat.key);
+    const lanes = catEvents.length ? assignLanes(catEvents) : [[]];
+
+    const block = document.createElement('div');
+    block.className = 'cat-block';
+
+    const label = document.createElement('div');
+    label.className = 'cat-label';
+    label.style.height = `calc(var(--row-h) * ${lanes.length})`;
+    label.innerHTML = cat.label.split('\n').map(l => `<span>${l}</span>`).join('<br>');
+    block.appendChild(label);
+
+    const catRows = document.createElement('div');
+    catRows.className = 'cat-rows';
+
+    lanes.forEach(laneEvents => {
+      const row = buildDayCellsRow();
+
+      if(laneEvents.length === 0){
+        const note = document.createElement('div');
+        note.className = 'row-empty-note';
+        note.textContent = '예정된 일정 없음';
+        row.appendChild(note);
+      }
+
+      laneEvents.forEach(ev => {
+        const s = parseDate(ev.start);
+        const e = parseDate(ev.end);
+        const colStart = dayDiff(minDate, s) + 1;
+        const colEnd = dayDiff(minDate, e) + 2; // exclusive
+
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        bar.style.gridColumn = `${colStart} / ${colEnd}`;
+        bar.style.background = `var(--${ev.color})`;
+        bar.textContent = ev.icon ? `${ev.icon} ${ev.name}` : ev.name;
+        bar.title = `${ev.name} (${ev.start} ~ ${ev.end})`;
+        row.appendChild(bar);
+      });
+
+      catRows.appendChild(row);
+    });
+
+    block.appendChild(catRows);
+    rowsEl.appendChild(block);
+  });
+
+  if(todayIndex >= 0){
+    const thread = document.createElement('div');
+    thread.className = 'today-thread';
+    thread.style.left = `calc(${todayIndex} * var(--col-width) + var(--col-width)/2)`;
+    rowsEl.appendChild(thread);
+
+    const flag = document.createElement('div');
+    flag.className = 'today-flag';
+    flag.textContent = '오늘';
+    flag.style.left = `calc(${todayIndex} * var(--col-width) + var(--col-width)/2 + var(--label-width))`;
+    headerEl.style.position = 'relative';
+    headerEl.appendChild(flag);
+  }
+
+  // 처음 열었을 때 '하루 전(어제)' 날짜부터 보이도록 자동으로 가로 스크롤 이동
+  const scrollAreaEl = document.querySelector('.scroll-area');
+  const yesterday = new Date(TODAY);
+  yesterday.setDate(yesterday.getDate() - 1);
+  let yesterdayIndex = dayDiff(minDate, yesterday);
+  if(yesterdayIndex < 0) yesterdayIndex = 0;
+  if(yesterdayIndex > days - 1) yesterdayIndex = days - 1;
+  const colWidthPx = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--col-width')) || 168;
+  requestAnimationFrame(() => {
+    scrollAreaEl.scrollLeft = yesterdayIndex * colWidthPx;
+  });
+}
+</script>
+
+</body>
+</html>
